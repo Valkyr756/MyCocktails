@@ -13,7 +13,7 @@ lateinit var spinner: Spinner
 lateinit var autoCompleteTextView: AutoCompleteTextView
 lateinit var spinnerButton: Button
 lateinit var completeButton: Button
-lateinit var presenter:
+lateinit var presenter:SearchPresenter
 
 class SearchActivity : AppCompatActivity(), ISearchView {
     override fun onCreate(savedInstanceState: Bundle?) {
