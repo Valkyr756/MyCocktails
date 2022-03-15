@@ -66,4 +66,26 @@
         app:layout_constraintBottom_toBottomOf="@+id/autoCompleteText"
         app:layout_constraintStart_toEndOf="@+id/autoCompleteText"
         app:layout_constraintTop_toTopOf="@+id/autoCompleteText" />
+
+    <RadioGroup
+        android:layout_width="116dp"
+        android:layout_height="97dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="500dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Local Search" />
+
+        <RadioButton
+            android:id="@+id/radioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inet Search" />
+    </RadioGroup>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
