@@ -26,19 +26,19 @@ class Network private constructor(context: Context) {
     private val CATEGORY_NAME_LABEL = "name"
 
     fun getCategories(listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
-
         val url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"
+
         val request = JsonObjectRequest(
             Request.Method.GET,
             url,
             null,
-            { response -> processCategories(response, listener) },
+            { response -> processCategories(response, listener, errorListener) },
             { error -> errorListener.onErrorResponse(error) }
         )
         queue.add(request)
     }
 
-    private fun processCategories(response: JSONObject, listener: Response.Listener<List<Category>>) {
+    private fun processCategories(response: JSONObject, listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
 
         val categories = ArrayList<Category>()
         try {
