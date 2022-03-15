@@ -17,5 +17,5 @@ interface DAO {
     fun insertIngredients(ingredients: List<Ingredient>)
 
     @Query("SELECT * FROM ingredient ORDER BY name")
-    fun getIngredients(): List<Category>
+        fun getIngredients(): List<Ingredient>
 }
