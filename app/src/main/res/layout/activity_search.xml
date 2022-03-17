@@ -8,7 +8,7 @@
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="200dp"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="@+id/textView"
@@ -18,7 +18,7 @@
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteText"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="AutoCompleteTextView"
@@ -31,8 +31,8 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginStart="75dp"
+        android:layout_marginTop="50dp"
         android:text="Categories"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,19 +41,21 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
         android:text="Ingredients"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spinner"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <Button
         android:id="@+id/searchSpinnerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="10dp"
         android:text="SEARCH"
         app:layout_constraintBottom_toBottomOf="@+id/spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toEndOf="@+id/spinner"
         app:layout_constraintTop_toTopOf="@+id/spinner" />
 
@@ -61,19 +63,23 @@
         android:id="@+id/completeSearchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="30dp"
         android:text="SEARCH"
         app:layout_constraintBottom_toBottomOf="@+id/autoCompleteText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toEndOf="@+id/autoCompleteText"
         app:layout_constraintTop_toTopOf="@+id/autoCompleteText" />
 
     <RadioGroup
         android:layout_width="116dp"
         android:layout_height="97dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteText">
 
         <RadioButton
             android:id="@+id/radioButton2"
