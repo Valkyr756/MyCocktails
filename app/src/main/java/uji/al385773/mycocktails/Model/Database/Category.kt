@@ -7,5 +7,11 @@ import androidx.room.PrimaryKey
 data class Category(
     @PrimaryKey
     val name: String
+
 )
+{
+    override fun toString(): String {
+        return name
+    }
+}
 

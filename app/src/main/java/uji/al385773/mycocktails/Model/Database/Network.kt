@@ -22,8 +22,8 @@ class Network private constructor(context: Context) {
     /*private val network = Network.getInstance(context)
     private val database = Database.getInstance(context)*/
     private val queue = Volley.newRequestQueue(context)
-    private val LIST_LABEL = "categories"
-    private val CATEGORY_NAME_LABEL = "name"
+    private val LIST_LABEL = "drinks"
+    private val CATEGORY_NAME_LABEL = "strCategory"
 
     fun getCategories(listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"
