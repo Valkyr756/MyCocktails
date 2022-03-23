@@ -7,4 +7,10 @@ import androidx.room.PrimaryKey
 data class Ingredient(
     @PrimaryKey
     val name: String
+
 )
+{
+    override fun toString(): String {
+        return name
+    }
+}

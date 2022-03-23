@@ -4,11 +4,17 @@ class SearchPresenter(val view: ISearchView, val model: SearchModel) {
 
     init {
         model.getCategories({
-                            view.showCategories(it)
+            view.showCategories(it)
         },
             {
-            view.errorMessage(it.toString())
-        })
+                view.errorMessage(it.toString())
+            })
 
+        model.getIngredients({
+            view.showIngredients(it)
+        },
+            {
+                view.errorMessage(it.toString())
+            })
     }
 }

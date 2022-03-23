@@ -17,15 +17,15 @@
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <AutoCompleteTextView
-        android:id="@+id/autoCompleteText"
+        android:id="@+id/autoCompleteTextIngredient"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="AutoCompleteTextView"
+        android:hint="Ingredient"
         app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
         tools:ignore="TouchTargetSizeCheck"
-        tools:text="Ingredients" />
+        tools:text="Ingredient" />
 
     <TextView
         android:id="@+id/textView"
@@ -66,30 +66,31 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="30dp"
         android:text="SEARCH"
-        app:layout_constraintBottom_toBottomOf="@+id/autoCompleteText"
+        app:layout_constraintBottom_toBottomOf="@+id/autoCompleteTextIngredient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.33"
-        app:layout_constraintStart_toEndOf="@+id/autoCompleteText"
-        app:layout_constraintTop_toTopOf="@+id/autoCompleteText" />
+        app:layout_constraintStart_toEndOf="@+id/autoCompleteTextIngredient"
+        app:layout_constraintTop_toTopOf="@+id/autoCompleteTextIngredient" />
 
     <RadioGroup
-        android:layout_width="116dp"
-        android:layout_height="97dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/autoCompleteText">
+        app:layout_constraintTop_toBottomOf="@+id/autoCompleteTextIngredient">
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radioButtonLocal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Local Search" />
 
         <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/radioButtonInet"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Inet Search" />
     </RadioGroup>

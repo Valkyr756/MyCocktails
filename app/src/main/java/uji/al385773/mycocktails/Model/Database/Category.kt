@@ -14,4 +14,3 @@ data class Category(
         return name
     }
 }
-
