@@ -7,4 +7,6 @@ interface ISearchView {
     fun showCategories(categories: List<Category>)
     fun showIngredients(ingredients: List<Ingredient>)
     fun errorMessage(message: String)
+    fun spinnerSearchEnabled(enabled: Boolean)
+    fun autoCompleteSearchEnabled(enabled: Boolean)
 }
