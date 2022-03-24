@@ -1,6 +1,7 @@
 package uji.al385773.mycocktails.Search
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import uji.al385773.mycocktails.Model.Database.Category
 import uji.al385773.mycocktails.Model.Database.Ingredient
 import uji.al385773.mycocktails.R
+import uji.al385773.mycocktails.Results.ResultsActivity
+import uji.al385773.mycocktails.ResultsInfo
 
 lateinit var spinner: Spinner
 lateinit var autoCompleteIngredient: AutoCompleteTextView
@@ -24,7 +27,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         spinner = findViewById(R.id.spinner)
         autoCompleteIngredient = findViewById(R.id.autoCompleteTextIngredient)
         spinnerButton = findViewById(R.id.searchSpinner)
+        spinnerButton.setOnClickListener { presenter.doSearch() }
         autoCompleteButton = findViewById(R.id.searchAutoComplete)
+        autoCompleteButton.setOnClickListener { presenter.doSearch() }
 
         presenter = SearchPresenter(this, SearchModel(this))
     }
@@ -73,5 +78,11 @@ class SearchActivity : AppCompatActivity(), ISearchView {
 
     override fun autoCompleteSearchEnabled(enabled: Boolean) {
         autoCompleteButton.isEnabled = enabled
+    }
+
+    override fun startResultsActivity(resultsInfo: ResultsInfo) {
+        val intent = Intent(this, ResultsActivity::class.java).apply {
+            putExtra(ResultsActivity.RESULTS_INFO, resultsInfo) }
+        startActivity(intent)
     }
 }

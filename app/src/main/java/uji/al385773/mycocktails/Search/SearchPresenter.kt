@@ -22,17 +22,21 @@ class SearchPresenter(val view: ISearchView, val model: SearchModel) {
     }
 
     fun setChosenIngredient(ingredient: Ingredient) {
-        //Falta implementar que se guarde el ingrediente para la busqueda posterior
+        model.setIngredient(ingredient.toString())
 
         view.autoCompleteSearchEnabled(true)
         view.spinnerSearchEnabled(false)
     }
 
     fun setChosenCategory(category: Category) {
-        //Falta implementar que se guarde la categoria para la busqueda posterior
+        model.setCategory(category.toString())
 
         view.spinnerSearchEnabled(true)
         view.autoCompleteSearchEnabled(false)
 
+    }
+
+    fun doSearch() {
+        view.startResultsActivity(model.resultsInfo)
     }
 }

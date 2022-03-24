@@ -5,8 +5,13 @@ import com.android.volley.Response
 import uji.al385773.mycocktails.Model.Database.Category
 import uji.al385773.mycocktails.Model.Database.Ingredient
 import uji.al385773.mycocktails.Model.Database.Network
+import uji.al385773.mycocktails.ResultsInfo
 
 class SearchModel(context:Context) {
+    var possibleIngredient: String = ""
+    var possibleCategory: String = ""
+    var searchChoice: Boolean = true
+
     private val network = Network.getInstance(context)
 
     fun getCategories(
@@ -23,4 +28,14 @@ class SearchModel(context:Context) {
         network.getIngredients(listener, errorListener)
     }
 
+    fun setIngredient(ingredient: String) {
+        possibleIngredient = ingredient
+        searchChoice = true
+    }
+
+    fun setCategory(category: String) {
+        possibleCategory = category
+        searchChoice = false
+    }
+    val resultsInfo get() = ResultsInfo(possibleIngredient, possibleCategory, searchChoice)
 }
