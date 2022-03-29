@@ -38,9 +38,19 @@ class Model(context:Context) {
         choice: Boolean
     ) {
         if (choice)
-            network.getCocktailsByCategory(listener, errorListener, categorySearch)
+            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, categorySearch)
         else
-            network.getCocktailsByIngredient(listener, errorListener, ingredientSearch)
+            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, ingredientSearch)
+
+
+    }
+
+    private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
+        var cocktailList: List<Cocktail>
+
+        for cocktailsID {
+            network.getCocktailsByID(listener, errorListener, it)
+        }
 
 
     }

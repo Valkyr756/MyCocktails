@@ -14,6 +14,12 @@ import androidx.room.PrimaryKey
 )
 
 data class Cocktail(
+    val name: String,
+    val isAlcoholic: String,
+    val glass: String,
+    val instructions: String,
+    //val ingredients: List<Ingredient>,
+
     @PrimaryKey
     val id: Int
 )//Implement Parcelable

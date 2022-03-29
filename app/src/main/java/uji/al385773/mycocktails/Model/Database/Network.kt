@@ -25,6 +25,10 @@ class Network private constructor(context: Context) {
     private val CATEGORY_NAME_LABEL = "strCategory"
     private val INGREDIENT_NAME_LABEL = "strIngredient1"
     private val COCKTAIL_ID_LABEL = "idDrink"
+    private val COCKTAIL_NAME_LABEL = "strDrink"
+    private val COCKTAIL_IS_ALCOHOLIC_LABEL = "strAlcoholic"
+    private val COCKTAIL_INSTRUCTIONS_LABEL = "strInstructions"
+    private val COCKTAIL_GLASS_LABEL = "strGlass"
 
     fun getCategories(listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"
@@ -115,5 +119,40 @@ class Network private constructor(context: Context) {
 
     fun getCocktailsByIngredient(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, ingredient: String) {
         TODO("Not yet implemented")
+    }
+
+    fun getCocktailsByID(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, searchID: String) {
+        val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$searchID"
+
+        val request = JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response -> processCocktailsByID(response, listener, errorListener) },
+            { error -> errorListener.onErrorResponse(error) }
+        )
+        queue.add(request)
+    }
+
+    private fun processCocktailsByID(response: JSONObject, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
+        val cocktail: Cocktail
+        try {
+            val cocktailArray = response.getJSONArray(LIST_LABEL)
+            val cocktailObject = cocktailArray[0] as JSONObject
+
+            val name = cocktailObject.getString(COCKTAIL_NAME_LABEL)
+            val isAlcoholic = cocktailObject.getString(COCKTAIL_IS_ALCOHOLIC_LABEL)
+            val instructions = cocktailObject.getString(COCKTAIL_INSTRUCTIONS_LABEL)
+            val glass = cocktailObject.getString(COCKTAIL_GLASS_LABEL)
+            val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
+            val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
+
+            return Cocktail(name, isAlcoholic, glass, instructions, id.toInt())
+
+        } catch (e: JSONException) {
+            errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
+            return
+        }
+        listener.onResponse(cocktailsID)
     }
 }
