@@ -46,10 +46,14 @@ class Model(context:Context) {
     }
 
     private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
-        var cocktailList: List<Cocktail>
+        var cocktailList = ArrayList<Cocktail>()
 
-        for cocktailsID {
-            network.getCocktailsByID(listener, errorListener, it)
+        for (id in cocktailsID) {
+            network.getCocktailByID({ cocktailList.add(it)
+                                    if (cocktailList.size == cocktailsID.size){
+                                        listener.onResponse(cocktailList)
+                                    }
+                                    }, errorListener, id)
         }
 
 

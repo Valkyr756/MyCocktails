@@ -18,7 +18,7 @@ data class Cocktail(
     val isAlcoholic: String,
     val glass: String,
     val instructions: String,
-    //val ingredients: List<Ingredient>,
+    val category: String,
 
     @PrimaryKey
     val id: Int

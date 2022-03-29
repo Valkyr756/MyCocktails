@@ -121,21 +121,20 @@ class Network private constructor(context: Context) {
         TODO("Not yet implemented")
     }
 
-    fun getCocktailsByID(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, searchID: String) {
+    fun getCocktailByID(listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener, searchID: String) {
         val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$searchID"
 
         val request = JsonObjectRequest(
             Request.Method.GET,
             url,
             null,
-            { response -> processCocktailsByID(response, listener, errorListener) },
+            { response -> processCocktailByID(response, listener, errorListener) },
             { error -> errorListener.onErrorResponse(error) }
         )
         queue.add(request)
     }
 
-    private fun processCocktailsByID(response: JSONObject, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener): Cocktail {
-        val cocktail: Cocktail
+        private fun processCocktailByID(response: JSONObject, listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener) {
         try {
             val cocktailArray = response.getJSONArray(LIST_LABEL)
             val cocktailObject = cocktailArray[0] as JSONObject
@@ -147,14 +146,10 @@ class Network private constructor(context: Context) {
             val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
             val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
 
-            //Esto tiene que devolver un Cocktail para que la función en el modelo pueda añadirlo a un array de Cocktails
 
-            return Cocktail(name, isAlcoholic, glass, instructions, id.toInt())
-//DUDA: SI ESTA FUNCIÓN TIENE QUE DEVOLVER UN COCKTAIL ¿NECESITA LISTENER? ¿QUÉ HACEMOS CON EL ERRORLISTENER SI HAY QUE DEVOLVER UN COCKTAIL?
+            listener.onResponse(Cocktail(name, isAlcoholic, glass, instructions, category, id.toInt()))
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
-            return Cocktail()
         }
-
     }
 }
