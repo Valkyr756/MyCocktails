@@ -31,7 +31,7 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         autoCompleteButton = findViewById(R.id.searchAutoComplete)
         autoCompleteButton.setOnClickListener { presenter.doSearch() }
 
-        presenter = SearchPresenter(this, SearchModel(this))
+        presenter = SearchPresenter(this, Model(this))
     }
 
 

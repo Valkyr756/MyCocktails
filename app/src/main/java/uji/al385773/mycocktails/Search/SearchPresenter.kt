@@ -3,7 +3,7 @@ package uji.al385773.mycocktails.Search
 import uji.al385773.mycocktails.Model.Database.Category
 import uji.al385773.mycocktails.Model.Database.Ingredient
 
-class SearchPresenter(val view: ISearchView, val model: SearchModel) {
+class SearchPresenter(val view: ISearchView, val model: Model) {
 
     init {
         model.getCategories({

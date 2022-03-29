@@ -20,9 +20,11 @@ class Network private constructor(context: Context) {
     companion object : SingletonHolder<Network, Context>(::Network)
 
     private val queue = Volley.newRequestQueue(context)
+
     private val LIST_LABEL = "drinks"
     private val CATEGORY_NAME_LABEL = "strCategory"
     private val INGREDIENT_NAME_LABEL = "strIngredient1"
+    private val COCKTAIL_ID_LABEL = "idDrink"
 
     fun getCategories(listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"
@@ -80,5 +82,39 @@ class Network private constructor(context: Context) {
         }
         ingredients.sortBy { it.name }
         listener.onResponse(ingredients)
+    }
+
+    fun getCocktailsByCategory(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, category: String) {
+        val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
+
+        val request = JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response -> processCocktailsByCategory(response, listener, errorListener) },
+            { error -> errorListener.onErrorResponse(error) }
+        )
+        queue.add(request)
+    }
+
+    private fun processCocktailsByCategory(response: JSONObject?, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
+        val cocktails = ArrayList<Cocktail>()
+        try {
+            val cocktailArray = response!!.getJSONArray(LIST_LABEL)
+            for (i in 0 until cocktailArray.length()) {
+                val cocktailObject = cocktailArray[i] as JSONObject
+                val id = cocktailObject.getString(COCKTAIL_ID_LABEL).toInt()
+                cocktails.add(Cocktail(id))
+            }
+        } catch (e: JSONException) {
+            errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
+            return
+        }
+        //cocktails.sortBy { it.id }
+        listener.onResponse(cocktails)
+    }
+
+    fun getCocktailsByIngredient(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, ingredient: String) {
+        TODO("Not yet implemented")
     }
 }

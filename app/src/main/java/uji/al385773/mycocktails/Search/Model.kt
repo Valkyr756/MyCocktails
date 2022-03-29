@@ -1,13 +1,15 @@
 package uji.al385773.mycocktails.Search
 
 import android.content.Context
+import android.location.Criteria
 import com.android.volley.Response
 import uji.al385773.mycocktails.Model.Database.Category
+import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.Model.Database.Ingredient
 import uji.al385773.mycocktails.Model.Database.Network
 import uji.al385773.mycocktails.ResultsInfo
 
-class SearchModel(context:Context) {
+class Model(context:Context) {
     var possibleIngredient: String = ""
     var possibleCategory: String = ""
     var searchChoice: Boolean = true
@@ -28,6 +30,19 @@ class SearchModel(context:Context) {
         network.getIngredients(listener, errorListener)
     }
 
+    fun getCocktails(
+        listener: Response.Listener<List<Cocktail>>,
+        errorListener: Response.ErrorListener,
+        ingredientSearch: String,
+        categorySearch: String,
+        choice: Boolean
+    ) {
+        if (choice)
+            network.getCocktailsByCategory(listener, errorListener, categorySearch)
+        else
+            network.getCocktailsByIngredient(listener, errorListener, ingredientSearch)
+    }
+
     fun setIngredient(ingredient: String) {
         possibleIngredient = ingredient
         searchChoice = true
@@ -37,5 +52,6 @@ class SearchModel(context:Context) {
         possibleCategory = category
         searchChoice = false
     }
+
     val resultsInfo get() = ResultsInfo(possibleIngredient, possibleCategory, searchChoice)
 }
