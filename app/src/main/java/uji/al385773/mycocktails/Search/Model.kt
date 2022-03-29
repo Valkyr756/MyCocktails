@@ -41,6 +41,8 @@ class Model(context:Context) {
             network.getCocktailsByCategory(listener, errorListener, categorySearch)
         else
             network.getCocktailsByIngredient(listener, errorListener, ingredientSearch)
+
+
     }
 
     fun setIngredient(ingredient: String) {

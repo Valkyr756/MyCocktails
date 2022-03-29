@@ -84,7 +84,7 @@ class Network private constructor(context: Context) {
         listener.onResponse(ingredients)
     }
 
-    fun getCocktailsByCategory(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, category: String) {
+    fun getCocktailsByCategory(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, category: String) {
         val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
 
         val request = JsonObjectRequest(
@@ -97,24 +97,23 @@ class Network private constructor(context: Context) {
         queue.add(request)
     }
 
-    private fun processCocktailsByCategory(response: JSONObject?, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
-        val cocktails = ArrayList<Cocktail>()
+    private fun processCocktailsByCategory(response: JSONObject, listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener) {
+        val cocktailsID = ArrayList<String>()
         try {
-            val cocktailArray = response!!.getJSONArray(LIST_LABEL)
+            val cocktailArray = response.getJSONArray(LIST_LABEL)
             for (i in 0 until cocktailArray.length()) {
                 val cocktailObject = cocktailArray[i] as JSONObject
-                val id = cocktailObject.getString(COCKTAIL_ID_LABEL).toInt()
-                cocktails.add(Cocktail(id))
+                val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
+                cocktailsID.add(id)
             }
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
             return
         }
-        //cocktails.sortBy { it.id }
-        listener.onResponse(cocktails)
+        listener.onResponse(cocktailsID)
     }
 
-    fun getCocktailsByIngredient(listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener, ingredient: String) {
+    fun getCocktailsByIngredient(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, ingredient: String) {
         TODO("Not yet implemented")
     }
 }
