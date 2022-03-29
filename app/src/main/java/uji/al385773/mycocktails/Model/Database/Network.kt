@@ -134,7 +134,7 @@ class Network private constructor(context: Context) {
         queue.add(request)
     }
 
-    private fun processCocktailsByID(response: JSONObject, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
+    private fun processCocktailsByID(response: JSONObject, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener): Cocktail {
         val cocktail: Cocktail
         try {
             val cocktailArray = response.getJSONArray(LIST_LABEL)
@@ -147,12 +147,14 @@ class Network private constructor(context: Context) {
             val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
             val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
 
-            return Cocktail(name, isAlcoholic, glass, instructions, id.toInt())
+            //Esto tiene que devolver un Cocktail para que la función en el modelo pueda añadirlo a un array de Cocktails
 
+            return Cocktail(name, isAlcoholic, glass, instructions, id.toInt())
+//DUDA: SI ESTA FUNCIÓN TIENE QUE DEVOLVER UN COCKTAIL ¿NECESITA LISTENER? ¿QUÉ HACEMOS CON EL ERRORLISTENER SI HAY QUE DEVOLVER UN COCKTAIL?
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
-            return
+            return Cocktail()
         }
-        listener.onResponse(cocktailsID)
+
     }
 }
