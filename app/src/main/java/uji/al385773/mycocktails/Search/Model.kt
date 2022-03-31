@@ -38,21 +38,19 @@ class Model(context:Context) {
         choice: Boolean
     ) {
         if (choice)
-            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, categorySearch)
-        else
             network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, ingredientSearch)
-
-
+        else
+            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, categorySearch)
     }
 
     private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
-        var cocktailList = ArrayList<Cocktail>()
+        val cocktailList = ArrayList<Cocktail>()
 
         for (id in cocktailsID) {
             network.getCocktailByID({ cocktailList.add(it)
-                                    if (cocktailList.size == cocktailsID.size){
-                                        listener.onResponse(cocktailList)
-                                    }
+                                      if (cocktailList.size == cocktailsID.size){
+                                          listener.onResponse(cocktailList)
+                                      }
                                     }, errorListener, id)
         }
 

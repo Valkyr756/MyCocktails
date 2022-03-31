@@ -34,9 +34,6 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         presenter = SearchPresenter(this, Model(this))
     }
 
-
-
-
     override fun showCategories(categories: List<Category>) {
         val adapter = ArrayAdapter(this,android.R.layout.simple_dropdown_item_1line,categories)
         spinner.adapter = adapter
@@ -48,7 +45,6 @@ class SearchActivity : AppCompatActivity(), ISearchView {
             }
             override fun onNothingSelected(p0: AdapterView<*>?) {}
         }.also { spinner.onItemSelectedListener = it }
-
     }
 
     override fun showIngredients(ingredients: List<Ingredient>) {

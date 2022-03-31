@@ -3,6 +3,7 @@ package uji.al385773.mycocktails.Results
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import uji.al385773.mycocktails.Model.Database.Cocktail
@@ -12,7 +13,7 @@ import uji.al385773.mycocktails.Search.Model
 
 class ResultsActivity : AppCompatActivity(), IResultsView {
 
-    private lateinit var CocktailView: RecyclerView
+    private lateinit var cocktailView: RecyclerView
     private lateinit var presenter: ResultsPresenter
     private lateinit var progressBar: ProgressBar
 
@@ -33,17 +34,17 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
         choiceRetrieved = resultsInfo.searchChoice
 
         progressBar = findViewById(R.id.progressBar)
-        CocktailView = findViewById(R.id.cocktailView)
-        CocktailView.layoutManager = LinearLayoutManager(this)
+        cocktailView = findViewById(R.id.cocktailView)
+        cocktailView.layoutManager = LinearLayoutManager(this)
 
         presenter = ResultsPresenter(this, Model(this))
     }
 
     override fun showCocktails(cocktails: List<Cocktail>) {
-        TODO("Not yet implemented")
+        cocktailView.adapter = ResultsAdapter(cocktails)
     }
 
     override fun errorMessage(message: String) {
-        TODO("Not yet implemented")
+        Toast.makeText(this,message, Toast.LENGTH_LONG).show()
     }
 }

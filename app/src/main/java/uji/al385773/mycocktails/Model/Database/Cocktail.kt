@@ -4,13 +4,12 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
-@Entity(
-    indices = [Index(value = ["name"], unique = true)],
-    foreignKeys = [ForeignKey(
+@Entity(foreignKeys = [ForeignKey(
         entity = Category::class,
         parentColumns = ["name"],
         childColumns = ["id"]
-    )]
+    )],
+    indices = [Index(value = ["name"], unique = true)],
 )
 
 data class Cocktail(

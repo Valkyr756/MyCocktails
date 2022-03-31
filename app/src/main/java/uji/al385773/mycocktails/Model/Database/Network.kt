@@ -89,7 +89,7 @@ class Network private constructor(context: Context) {
     }
 
     fun getCocktailsByCategory(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, category: String) {
-        val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
+        val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
 
         val request = JsonObjectRequest(
             Request.Method.GET,
@@ -122,7 +122,7 @@ class Network private constructor(context: Context) {
     }
 
     fun getCocktailByID(listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener, searchID: String) {
-        val url = "http://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$searchID"
+        val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$searchID"
 
         val request = JsonObjectRequest(
             Request.Method.GET,
