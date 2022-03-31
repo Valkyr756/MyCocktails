@@ -11,9 +11,7 @@ class ResultsPresenter(val view: IResultsView, val model: Model) {
             {
                 view.errorMessage(it.toString())
             },
-            ResultsActivity.ingredientRetrieved,
-            ResultsActivity.categoryRetrieved,
-            ResultsActivity.isCategoryRetrieved
+            ResultsActivity.retrievedInfo
         )
     }
 }

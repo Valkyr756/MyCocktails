@@ -19,9 +19,10 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
 
     companion object {
         const val RESULTS_INFO = "ResultsInfo"
-        lateinit var categoryRetrieved: String
+        lateinit var retrievedInfo: ResultsInfo
+        /*lateinit var categoryRetrieved: String
         lateinit var ingredientRetrieved: String
-        var isCategoryRetrieved: Boolean = false
+        var isCategoryRetrieved: Boolean = false*/
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +30,10 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
         setContentView(R.layout.activity_results)
 
         val resultsInfo: ResultsInfo = intent.getParcelableExtra(RESULTS_INFO)!!
-        categoryRetrieved = resultsInfo.category
+        retrievedInfo = resultsInfo
+        /*categoryRetrieved = resultsInfo.category
         ingredientRetrieved = resultsInfo.ingredient
-        isCategoryRetrieved = resultsInfo.isCategory
+        isCategoryRetrieved = resultsInfo.isCategory*/
 
         progressBar = findViewById(R.id.progressBar)
         cocktailView = findViewById(R.id.cocktailView)

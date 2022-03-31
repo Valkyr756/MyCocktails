@@ -32,14 +32,12 @@ class Model(context:Context) {
     fun getCocktails(
         listener: Response.Listener<List<Cocktail>>,
         errorListener: Response.ErrorListener,
-        ingredientSearch: String,
-        categorySearch: String,
-        isCategory: Boolean
+        gameInfo: ResultsInfo
     ) {
-        if (isCategory)
-            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, categorySearch)
+        if (gameInfo.isCategory)
+            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.category)
         else
-            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, ingredientSearch)
+            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.ingredient)
     }
 
     private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {

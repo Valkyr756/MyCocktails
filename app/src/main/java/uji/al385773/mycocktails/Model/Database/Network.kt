@@ -87,7 +87,7 @@ class Network private constructor(context: Context) {
         ingredients.sortBy { it.name }
         listener.onResponse(ingredients)
     }
-
+    //Cambie hhtp a https. Arreglo problema de conexion Cleartext HTTP traffic not permitted
     fun getCocktailsByCategory(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, category: String) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
 
