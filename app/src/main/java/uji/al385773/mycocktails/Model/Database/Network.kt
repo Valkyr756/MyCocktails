@@ -122,7 +122,7 @@ class Network private constructor(context: Context) {
     }
 
     fun getCocktailByID(listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener, searchID: String) {
-        val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$searchID"
+        val url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=$searchID"
 
         val request = JsonObjectRequest(
             Request.Method.GET,

@@ -2,10 +2,8 @@ package uji.al385773.mycocktails
 
 import android.os.Parcel
 import android.os.Parcelable
-import uji.al385773.mycocktails.Model.Database.Category
-import uji.al385773.mycocktails.Model.Database.Ingredient
 
-data class ResultsInfo(val category: String, val ingredient: String, val searchChoice: Boolean) : Parcelable {
+data class ResultsInfo(val category: String, val ingredient: String, val isCategory: Boolean) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
@@ -16,7 +14,7 @@ data class ResultsInfo(val category: String, val ingredient: String, val searchC
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(category)
         parcel.writeString(ingredient)
-        parcel.writeByte(if (searchChoice) 1 else 0)
+        parcel.writeByte(if (isCategory) 1 else 0)
     }
 
     override fun describeContents(): Int {

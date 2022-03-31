@@ -1,7 +1,6 @@
 package uji.al385773.mycocktails.Search
 
 import android.content.Context
-import android.location.Criteria
 import com.android.volley.Response
 import uji.al385773.mycocktails.Model.Database.Category
 import uji.al385773.mycocktails.Model.Database.Cocktail
@@ -12,7 +11,7 @@ import uji.al385773.mycocktails.ResultsInfo
 class Model(context:Context) {
     var possibleIngredient: String = ""
     var possibleCategory: String = ""
-    var searchChoice: Boolean = true
+    var isCategory: Boolean = true
 
     private val network = Network.getInstance(context)
 
@@ -35,12 +34,12 @@ class Model(context:Context) {
         errorListener: Response.ErrorListener,
         ingredientSearch: String,
         categorySearch: String,
-        choice: Boolean
+        isCategory: Boolean
     ) {
-        if (choice)
-            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, ingredientSearch)
-        else
+        if (isCategory)
             network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, categorySearch)
+        else
+            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, ingredientSearch)
     }
 
     private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
@@ -59,13 +58,13 @@ class Model(context:Context) {
 
     fun setIngredient(ingredient: String) {
         possibleIngredient = ingredient
-        searchChoice = true
+        isCategory = false
     }
 
     fun setCategory(category: String) {
         possibleCategory = category
-        searchChoice = false
+        isCategory = true
     }
 
-    val resultsInfo get() = ResultsInfo(possibleIngredient, possibleCategory, searchChoice)
+    val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory)
 }

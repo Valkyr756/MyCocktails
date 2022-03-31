@@ -13,7 +13,7 @@ class ResultsPresenter(val view: IResultsView, val model: Model) {
             },
             ResultsActivity.ingredientRetrieved,
             ResultsActivity.categoryRetrieved,
-            ResultsActivity.choiceRetrieved
+            ResultsActivity.isCategoryRetrieved
         )
     }
 }
