@@ -8,12 +8,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
 import org.json.JSONObject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import uji.al385773.mycocktails.Model.Database.DAO
-import javax.xml.transform.ErrorListener
 
 class Network private constructor(context: Context) {
 
@@ -87,7 +81,7 @@ class Network private constructor(context: Context) {
         ingredients.sortBy { it.name }
         listener.onResponse(ingredients)
     }
-    //Cambie hhtp a https. Arreglo problema de conexion Cleartext HTTP traffic not permitted
+
     fun getCocktailsByCategory(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, category: String) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=$category"
 
@@ -95,13 +89,26 @@ class Network private constructor(context: Context) {
             Request.Method.GET,
             url,
             null,
-            { response -> processCocktailsByCategory(response, listener, errorListener) },
+            { response -> processCocktailsBySearchCriteria(response, listener, errorListener) },
             { error -> errorListener.onErrorResponse(error) }
         )
         queue.add(request)
     }
 
-    private fun processCocktailsByCategory(response: JSONObject, listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener) {
+    fun getCocktailsByIngredient(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, ingredient: String) {
+        val url = "https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=$ingredient"
+
+        val request = JsonObjectRequest(
+            Request.Method.GET,
+            url,
+            null,
+            { response -> processCocktailsBySearchCriteria(response, listener, errorListener) },
+            { error -> errorListener.onErrorResponse(error) }
+        )
+        queue.add(request)
+    }
+
+    private fun processCocktailsBySearchCriteria(response: JSONObject, listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener) {
         val cocktailsID = ArrayList<String>()
         try {
             val cocktailArray = response.getJSONArray(LIST_LABEL)
@@ -117,9 +124,7 @@ class Network private constructor(context: Context) {
         listener.onResponse(cocktailsID)
     }
 
-    fun getCocktailsByIngredient(listener: Response.Listener<List<String>>, errorListener: Response.ErrorListener, ingredient: String) {
-        TODO("Not yet implemented")
-    }
+
 
     fun getCocktailByID(listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener, searchID: String) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=$searchID"
@@ -145,9 +150,18 @@ class Network private constructor(context: Context) {
             val glass = cocktailObject.getString(COCKTAIL_GLASS_LABEL)
             val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
             val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
+            val ingredientList = mutableListOf<String>()
 
+            var strIngredient: String = cocktailObject.getString(INGREDIENT_NAME_LABEL)    //strIngredient1
+            var i = 1   //index for moving through the ingredients in the JSON
 
-            listener.onResponse(Cocktail(name, isAlcoholic, glass, instructions, category, id.toInt()))
+            while (strIngredient != "null") {
+                ingredientList.add(strIngredient)
+                i++
+                strIngredient = cocktailObject.getString("strIngredient$i")
+            }
+
+            listener.onResponse(Cocktail(name, isAlcoholic, glass, instructions, category, ingredientList, id.toInt()))
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
         }

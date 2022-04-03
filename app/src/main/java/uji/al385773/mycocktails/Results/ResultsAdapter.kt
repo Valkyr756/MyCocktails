@@ -15,7 +15,7 @@ class ResultsAdapter(private val results: List<Cocktail>): RecyclerView.Adapter<
         var titleCocktailText: TextView = view.findViewById(R.id.titleCocktailText)
         var categoryText: TextView = view.findViewById(R.id.categoryText)
         var alcoholicText: TextView = view.findViewById(R.id.alcoholicText)
-        //var ingredientsText: TextView = view.findViewById(R.id.ingredientsText)
+        var ingredientsText: TextView = view.findViewById(R.id.ingredientsText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,6 +32,7 @@ class ResultsAdapter(private val results: List<Cocktail>): RecyclerView.Adapter<
             titleCocktailText.text = result.name
             categoryText.text = result.category
             alcoholicText.text = result.isAlcoholic
+            ingredientsText.text = result.ingredients.joinToString(", ")
         }
     }
 
