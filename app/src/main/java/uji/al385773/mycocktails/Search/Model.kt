@@ -2,6 +2,7 @@ package uji.al385773.mycocktails.Search
 
 import android.content.Context
 import com.android.volley.Response
+import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Model.Database.Category
 import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.Model.Database.Ingredient
@@ -12,6 +13,13 @@ class Model(context:Context) {
     var possibleIngredient: String = ""
     var possibleCategory: String = ""
     var isCategory: Boolean = true
+
+    var detailsName: String = ""
+    var detailsalcoholic: String = ""
+    var detailsGlass: String = ""
+    var detailsCategory: String = ""
+    var detailsInstructions: String = ""
+    var detailsIngredients: String = ""
 
     private val network = Network.getInstance(context)
 
@@ -64,5 +72,15 @@ class Model(context:Context) {
         isCategory = true
     }
 
+    fun getDetails(cocktail: Cocktail) {
+        detailsName = cocktail.name
+        detailsalcoholic = cocktail.isAlcoholic
+        detailsGlass = cocktail.glass
+        detailsCategory = cocktail.category
+        detailsInstructions = cocktail.instructions
+        detailsIngredients = cocktail.ingredients.joinToString(", ")
+    }
+
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory)
+    val detailsInfo get() = DetailsInfo(detailsName, detailsalcoholic, detailsGlass, detailsCategory, detailsInstructions, detailsIngredients)
 }

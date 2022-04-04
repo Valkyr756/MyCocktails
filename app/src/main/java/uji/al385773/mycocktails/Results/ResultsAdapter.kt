@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.R
 
-class ResultsAdapter(private val results: List<Cocktail>): RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
+class ResultsAdapter(private val results: List<Cocktail>,
+                     private val listener: (Cocktail) -> Unit
+                     ): RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {   //inner como static
 
         var titleCocktailText: TextView = view.findViewById(R.id.titleCocktailText)
         var categoryText: TextView = view.findViewById(R.id.categoryText)
@@ -29,6 +31,7 @@ class ResultsAdapter(private val results: List<Cocktail>): RecyclerView.Adapter<
         val result = results[position]
 
         with(holder) {
+            itemView.setOnClickListener { listener(result) }
             titleCocktailText.text = result.name
             categoryText.text = result.category
             alcoholicText.text = result.isAlcoholic

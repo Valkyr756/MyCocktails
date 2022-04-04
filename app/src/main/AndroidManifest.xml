@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyCocktails">
         <activity
+            android:name=".Detail.DetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".Results.ResultsActivity"
             android:exported="false" />
         <activity

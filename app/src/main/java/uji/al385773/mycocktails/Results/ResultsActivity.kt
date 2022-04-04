@@ -1,11 +1,15 @@
 package uji.al385773.mycocktails.Results
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import uji.al385773.mycocktails.DetailsInfo
+import uji.al385773.mycocktails.Detail.DetailsActivity
 import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.ResultsInfo
@@ -37,10 +41,18 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
     }
 
     override fun showCocktails(cocktails: List<Cocktail>) {
-        cocktailView.adapter = ResultsAdapter(cocktails)
+        cocktailView.adapter = ResultsAdapter(cocktails) { presenter.onCocktailDetailRequested(it) }
+        progressBar.isVisible = false
     }
 
     override fun errorMessage(message: String) {
         Toast.makeText(this,message, Toast.LENGTH_LONG).show()
     }
+
+    override fun startDetailsActivity(detailsInfo: DetailsInfo) {
+        val intent = Intent(this, DetailsActivity::class.java).apply {
+            putExtra(DetailsActivity.DETAILS_INFO, detailsInfo) }
+        startActivity(intent)
+    }
 }
+//HACER LO DE COCKTAILINGREDIENDT Y CAMBIARLO EN LOS SCRIPTS

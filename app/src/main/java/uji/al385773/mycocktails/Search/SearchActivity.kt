@@ -1,6 +1,5 @@
 package uji.al385773.mycocktails.Search
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -14,13 +13,14 @@ import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
 
-lateinit var spinner: Spinner
-lateinit var autoCompleteIngredient: AutoCompleteTextView
-lateinit var spinnerButton: Button
-lateinit var autoCompleteButton: Button
-lateinit var presenter:SearchPresenter
-
 class SearchActivity : AppCompatActivity(), ISearchView {
+
+    lateinit var spinner: Spinner
+    lateinit var autoCompleteIngredient: AutoCompleteTextView
+    lateinit var spinnerButton: Button
+    lateinit var autoCompleteButton: Button
+    lateinit var presenter:SearchPresenter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
