@@ -2,6 +2,7 @@ package uji.al385773.mycocktails.Detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import org.w3c.dom.Text
 import uji.al385773.mycocktails.DetailsInfo
@@ -19,6 +20,8 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var scoreCocktail: TextView
     lateinit var instructionsCocktail: TextView
     lateinit var ingredientsCocktail: TextView
+    lateinit var scoreButton: Button
+    lateinit var addButton: Button
 
     companion object {
         const val DETAILS_INFO = "DetailsInfo"
