@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Detail.DetailsActivity
 import uji.al385773.mycocktails.Model.Database.Cocktail
+import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.ResultsInfo
 import uji.al385773.mycocktails.Search.Model
@@ -40,8 +41,8 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
         presenter = ResultsPresenter(this, Model(this))
     }
 
-    override fun showCocktails(cocktails: List<Cocktail>) {
-        cocktailView.adapter = ResultsAdapter(cocktails) { presenter.onCocktailDetailRequested(it) }
+    override fun showCocktails(cocktailBundle: List<CocktailBundle>) {
+        cocktailView.adapter = ResultsAdapter(cocktailBundle) { presenter.onCocktailDetailRequested(it) }
         progressBar.isVisible = false
     }
 
@@ -49,10 +50,9 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
         Toast.makeText(this,message, Toast.LENGTH_LONG).show()
     }
 
-    override fun startDetailsActivity(detailsInfo: DetailsInfo) {
+    override fun startDetailsActivity(cocktailBundle: CocktailBundle) {
         val intent = Intent(this, DetailsActivity::class.java).apply {
-            putExtra(DetailsActivity.DETAILS_INFO, detailsInfo) }
+            putExtra(DetailsActivity.DETAILS_INFO, cocktailBundle) }
         startActivity(intent)
     }
 }
-//HACER LO DE COCKTAILINGREDIENDT Y CAMBIARLO EN LOS SCRIPTS
