@@ -3,10 +3,7 @@ package uji.al385773.mycocktails.Search
 import android.content.Context
 import com.android.volley.Response
 import uji.al385773.mycocktails.DetailsInfo
-import uji.al385773.mycocktails.Model.Database.Category
-import uji.al385773.mycocktails.Model.Database.Cocktail
-import uji.al385773.mycocktails.Model.Database.Ingredient
-import uji.al385773.mycocktails.Model.Database.Network
+import uji.al385773.mycocktails.Model.Database.*
 import uji.al385773.mycocktails.ResultsInfo
 
 class Model(context:Context) {
@@ -38,7 +35,7 @@ class Model(context:Context) {
     }
 
     fun getCocktails(
-        listener: Response.Listener<List<Cocktail>>,
+        listener: Response.Listener<List<CocktailBundle>>,
         errorListener: Response.ErrorListener,
         gameInfo: ResultsInfo
     ) {
@@ -48,13 +45,13 @@ class Model(context:Context) {
             network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.ingredient)
     }
 
-    private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<Cocktail>>, errorListener: Response.ErrorListener) {
-        val cocktailList = ArrayList<Cocktail>()
+    private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<CocktailBundle>>, errorListener: Response.ErrorListener) {
+        val cocktailBundle = ArrayList<CocktailBundle>()
 
         for (id in cocktailsID) {
-            network.getCocktailByID({ cocktailList.add(it)
-                                      if (cocktailList.size == cocktailsID.size){
-                                          listener.onResponse(cocktailList)
+            network.getCocktailByID({ cocktailBundle.add(it)
+                                      if (cocktailBundle.size == cocktailsID.size){
+                                          listener.onResponse(cocktailBundle)
                                       }
                                     }, errorListener, id)
         }
@@ -72,15 +69,15 @@ class Model(context:Context) {
         isCategory = true
     }
 
-    fun getDetails(cocktail: Cocktail) {
-        detailsName = cocktail.name
-        detailsalcoholic = cocktail.isAlcoholic
-        detailsGlass = cocktail.glass
-        detailsCategory = cocktail.category
-        detailsInstructions = cocktail.instructions
-        detailsIngredients = cocktail.ingredients.joinToString(", ")
-    }
+    /*fun getDetails(cocktailBundle: CocktailBundle) {
+        detailsName = cocktailBundle.cocktail.name
+        detailsalcoholic = cocktailBundle.cocktail.isAlcoholic
+        detailsGlass = cocktailBundle.cocktail.glass
+        detailsCategory = cocktailBundle.cocktail.category
+        detailsInstructions = cocktailBundle.cocktail.instructions
+        detailsIngredients = cocktailBundle.cocktailIngredients.
+    }*/
 
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory)
-    val detailsInfo get() = DetailsInfo(detailsName, detailsalcoholic, detailsGlass, detailsCategory, detailsInstructions, detailsIngredients)
+    //val detailsInfo get() = DetailsInfo(detailsName, detailsalcoholic, detailsGlass, detailsCategory, detailsInstructions, detailsIngredients)
 }

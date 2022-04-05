@@ -126,7 +126,7 @@ class Network private constructor(context: Context) {
 
 
 
-    fun getCocktailByID(listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener, searchID: String) {
+    fun getCocktailByID(listener: Response.Listener<CocktailBundle>, errorListener: Response.ErrorListener, searchID: String) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=$searchID"
 
         val request = JsonObjectRequest(
@@ -139,7 +139,7 @@ class Network private constructor(context: Context) {
         queue.add(request)
     }
 
-        private fun processCocktailByID(response: JSONObject, listener: Response.Listener<Cocktail>, errorListener: Response.ErrorListener) {
+        private fun processCocktailByID(response: JSONObject, listener: Response.Listener<CocktailBundle>, errorListener: Response.ErrorListener) {
         try {
             val cocktailArray = response.getJSONArray(LIST_LABEL)
             val cocktailObject = cocktailArray[0] as JSONObject
@@ -150,18 +150,18 @@ class Network private constructor(context: Context) {
             val glass = cocktailObject.getString(COCKTAIL_GLASS_LABEL)
             val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
             val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
-            val ingredientList = mutableListOf<String>()
+            val ingredientList = mutableListOf<CocktailIngredient>()
 
             var strIngredient: String = cocktailObject.getString(INGREDIENT_NAME_LABEL)    //strIngredient1
             var i = 1   //index for moving through the ingredients in the JSON
 
             while (strIngredient != "null") {
-                ingredientList.add(strIngredient)
+                ingredientList.add(CocktailIngredient(id.toInt(), strIngredient))
                 i++
                 strIngredient = cocktailObject.getString("strIngredient$i")
             }
 
-            listener.onResponse(Cocktail(name, isAlcoholic, glass, instructions, category, ingredientList, id.toInt()))
+            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, id.toInt()), ingredientList))
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
         }

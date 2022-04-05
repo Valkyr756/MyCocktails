@@ -13,7 +13,7 @@ import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
 import uji.al385773.mycocktails.Search.Model
 
-class DetailsActivity : AppCompatActivity(), IDetailsView {
+class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener {
 
     lateinit var nameCocktail: TextView
     lateinit var alcoholicCocktail: TextView
@@ -43,12 +43,11 @@ class DetailsActivity : AppCompatActivity(), IDetailsView {
         ingredientsCocktail = findViewById(R.id.ingredientsCocktailText)
 
         scoreButton = findViewById(R.id.scoreCocktailButton)
-        scoreButton.setOnClickListener { presenter.onRequestScoreDialog() }
+        scoreButton.setOnClickListener { presenter.onRequestScore() }
         addButton = findViewById(R.id.addCocktailButton)
         addButton.setOnClickListener {  }
 
         presenter = DetailsPresenter(this, Model(this))
-
 
         val detailsInfo: DetailsInfo = intent.getParcelableExtra(DETAILS_INFO)!!
 
@@ -61,4 +60,8 @@ class DetailsActivity : AppCompatActivity(), IDetailsView {
     }
 
     override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")
+
+    override fun onScoreAvailable(score: Int) {
+        scoreCocktail.text = "$score out of 10"
+    }
 }

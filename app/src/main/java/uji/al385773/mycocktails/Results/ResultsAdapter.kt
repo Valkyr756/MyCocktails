@@ -6,9 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import uji.al385773.mycocktails.Model.Database.Cocktail
+import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 
-class ResultsAdapter(private val results: List<Cocktail>,
+class ResultsAdapter(private val results: List<CocktailBundle>,
                      private val listener: (Cocktail) -> Unit
                      ): RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
 
@@ -35,7 +36,7 @@ class ResultsAdapter(private val results: List<Cocktail>,
             titleCocktailText.text = result.name
             categoryText.text = result.category
             alcoholicText.text = result.isAlcoholic
-            ingredientsText.text = result.ingredients.joinToString(", ")
+            ingredientsText.text = result.cocktailIngredients.joinToString(", ")
         }
     }
 
