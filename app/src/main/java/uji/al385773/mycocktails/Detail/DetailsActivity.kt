@@ -2,15 +2,18 @@ package uji.al385773.mycocktails.Detail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import org.w3c.dom.Text
 import uji.al385773.mycocktails.DetailsInfo
+import uji.al385773.mycocktails.Dialogs.ScoreDialog
 import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
+import uji.al385773.mycocktails.Search.Model
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : AppCompatActivity(), IDetailsView {
 
     lateinit var nameCocktail: TextView
     lateinit var alcoholicCocktail: TextView
@@ -19,6 +22,9 @@ class DetailsActivity : AppCompatActivity() {
     lateinit var scoreCocktail: TextView
     lateinit var instructionsCocktail: TextView
     lateinit var ingredientsCocktail: TextView
+    lateinit var scoreButton: Button
+    lateinit var addButton: Button
+    lateinit var presenter: DetailsPresenter
 
     companion object {
         const val DETAILS_INFO = "DetailsInfo"
@@ -36,6 +42,14 @@ class DetailsActivity : AppCompatActivity() {
         instructionsCocktail = findViewById(R.id.instructionsCocktailText)
         ingredientsCocktail = findViewById(R.id.ingredientsCocktailText)
 
+        scoreButton = findViewById(R.id.scoreCocktailButton)
+        scoreButton.setOnClickListener { presenter.onRequestScoreDialog() }
+        addButton = findViewById(R.id.addCocktailButton)
+        addButton.setOnClickListener {  }
+
+        presenter = DetailsPresenter(this, Model(this))
+
+
         val detailsInfo: DetailsInfo = intent.getParcelableExtra(DETAILS_INFO)!!
 
         nameCocktail.text = detailsInfo.name
@@ -45,4 +59,6 @@ class DetailsActivity : AppCompatActivity() {
         instructionsCocktail.text = detailsInfo.instructions
         ingredientsCocktail.text = detailsInfo.ingredients
     }
+
+    override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")
 }

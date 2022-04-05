@@ -3,11 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout-land/activity_details.xml" value="0.25" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout-land/activity_search.xml" value="0.2682291666666667" />
-        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/activity_details.xml" value="0.33" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/activity_details.xml" value="0.22" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/activity_results.xml" value="0.17806484295845998" />
-        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/activity_search.xml" value="0.33" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/activity_search.xml" value="0.25" />
         <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/cocktail_line.xml" value="0.33" />
+        <entry key="..\:/Users/Daniel/AndroidStudioProjects/MyCocktails/app/src/main/res/layout/dialog_score.xml" value="0.25" />
         <entry key="..\:/Users/susan/Documents/Susana/Uni/Moviles/MyCocktails/app/src/main/res/layout/activity_results.xml" value="0.2006340579710145" />
         <entry key="..\:/Users/susan/Documents/Susana/Uni/Moviles/MyCocktails/app/src/main/res/layout/activity_search.xml" value="0.17266187524210636" />
         <entry key="..\:/Users/susan/Documents/Susana/Uni/Moviles/MyCocktails/app/src/main/res/layout/cocktail_line.xml" value="0.2279136753195804" />
