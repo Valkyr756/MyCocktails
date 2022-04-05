@@ -13,7 +13,7 @@ import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
 import uji.al385773.mycocktails.Search.Model
 
-class DetailsActivity : AppCompatActivity(), IDetailsView {
+class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener {
 
     lateinit var nameCocktail: TextView
     lateinit var alcoholicCocktail: TextView
@@ -60,4 +60,8 @@ class DetailsActivity : AppCompatActivity(), IDetailsView {
     }
 
     override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")
+
+    override fun onScoreAvailable(score: Int) {
+        scoreCocktail.text = "$score out of 10"
+    }
 }
