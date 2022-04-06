@@ -8,6 +8,7 @@ import org.w3c.dom.Text
 import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Dialogs.ScoreDialog
 import uji.al385773.mycocktails.Model.Database.Cocktail
+import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
@@ -49,14 +50,25 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
 
         presenter = DetailsPresenter(this, Model(this))
 
-        val detailsInfo: DetailsInfo = intent.getParcelableExtra(DETAILS_INFO)!!
+        val detailsInfo: CocktailBundle = intent.getParcelableExtra(DETAILS_INFO)!!
 
-        nameCocktail.text = detailsInfo.name
-        alcoholicCocktail.text = detailsInfo.alcoholic
-        typeOfGlassCocktail.text = detailsInfo.glass
-        categoryCocktail.text = detailsInfo.category
-        instructionsCocktail.text = detailsInfo.instructions
-        ingredientsCocktail.text = detailsInfo.ingredients
+        nameCocktail.text = detailsInfo.cocktail.name
+        alcoholicCocktail.text = detailsInfo.cocktail.isAlcoholic
+        typeOfGlassCocktail.text = detailsInfo.cocktail.glass
+        categoryCocktail.text = detailsInfo.cocktail.category
+        instructionsCocktail.text = detailsInfo.cocktail.instructions
+
+        var i = 0
+        while (i < detailsInfo.cocktailIngredients.size){
+            if (detailsInfo.cocktailIngredients[i].measures == "null")
+                ingredientsCocktail.text = "${ingredientsCocktail.text}${detailsInfo.cocktailIngredients[i].ingredientName}"
+            else
+                ingredientsCocktail.text = "${ingredientsCocktail.text}${detailsInfo.cocktailIngredients[i].measures}${detailsInfo.cocktailIngredients[i].ingredientName}"
+
+            if (i != detailsInfo.cocktailIngredients.size - 1)
+                ingredientsCocktail.text = ingredientsCocktail.text.toString().plus(", ")
+            i++
+        }
     }
 
     override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")

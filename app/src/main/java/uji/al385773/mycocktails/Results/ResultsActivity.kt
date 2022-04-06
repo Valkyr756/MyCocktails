@@ -8,9 +8,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Detail.DetailsActivity
-import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.ResultsInfo

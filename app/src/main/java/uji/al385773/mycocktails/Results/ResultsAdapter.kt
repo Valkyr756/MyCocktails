@@ -1,16 +1,16 @@
 package uji.al385773.mycocktails.Results
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 
 class ResultsAdapter(private val results: List<CocktailBundle>,
-                     private val listener: (Cocktail) -> Unit
+                     private val listener: (CocktailBundle) -> Unit
                      ): RecyclerView.Adapter<ResultsAdapter.ViewHolder>() {
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {   //inner como static
@@ -33,10 +33,22 @@ class ResultsAdapter(private val results: List<CocktailBundle>,
 
         with(holder) {
             itemView.setOnClickListener { listener(result) }
-            titleCocktailText.text = result.name
-            categoryText.text = result.category
-            alcoholicText.text = result.isAlcoholic
-            ingredientsText.text = result.cocktailIngredients.joinToString(", ")
+            titleCocktailText.text = result.cocktail.name
+            categoryText.text = result.cocktail.category
+            alcoholicText.text = result.cocktail.isAlcoholic
+
+            var i = 0
+            ingredientsText.text = ""   //Esto es necesario porque sino al arrastrar la pantalla se vuelve a cargar el RecyclerView y se añade otra cadena a la ya existente
+            while (i < result.cocktailIngredients.size){
+                if (result.cocktailIngredients[i].measures == "null")   //Algunos ingredientes no tienen mediciones (null)
+                    ingredientsText.text = "${ingredientsText.text}${result.cocktailIngredients[i].ingredientName}"
+                else
+                    ingredientsText.text = "${ingredientsText.text}${result.cocktailIngredients[i].measures}${result.cocktailIngredients[i].ingredientName}"
+
+                if (i != result.cocktailIngredients.size - 1)
+                    ingredientsText.text = ingredientsText.text.toString().plus(", ")
+                i++
+            }
         }
     }
 

@@ -11,12 +11,12 @@ class Model(context:Context) {
     var possibleCategory: String = ""
     var isCategory: Boolean = true
 
-    var detailsName: String = ""
+    /*var detailsName: String = ""
     var detailsalcoholic: String = ""
     var detailsGlass: String = ""
     var detailsCategory: String = ""
     var detailsInstructions: String = ""
-    var detailsIngredients: String = ""
+    var detailsIngredients: String = ""*/
 
     private val network = Network.getInstance(context)
 

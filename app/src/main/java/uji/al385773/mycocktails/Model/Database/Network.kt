@@ -18,6 +18,7 @@ class Network private constructor(context: Context) {
     private val LIST_LABEL = "drinks"
     private val CATEGORY_NAME_LABEL = "strCategory"
     private val INGREDIENT_NAME_LABEL = "strIngredient1"
+    private val MEASURE_NAME_LABEL = "strMeasure1"
     private val COCKTAIL_ID_LABEL = "idDrink"
     private val COCKTAIL_NAME_LABEL = "strDrink"
     private val COCKTAIL_IS_ALCOHOLIC_LABEL = "strAlcoholic"
@@ -153,11 +154,13 @@ class Network private constructor(context: Context) {
             val ingredientList = mutableListOf<CocktailIngredient>()
 
             var strIngredient: String = cocktailObject.getString(INGREDIENT_NAME_LABEL)    //strIngredient1
+            var strMeasure: String = cocktailObject.getString(MEASURE_NAME_LABEL)  //strMeasure1
             var i = 1   //index for moving through the ingredients in the JSON
 
-            while (strIngredient != "null") {
-                ingredientList.add(CocktailIngredient(id.toInt(), strIngredient))
+            while (strIngredient != "null") {   //Sirve tanto strIngredient como strMeasure
+                ingredientList.add(CocktailIngredient(id.toInt(), strMeasure, strIngredient))
                 i++
+                strMeasure = cocktailObject.getString("strMeasure$i")
                 strIngredient = cocktailObject.getString("strIngredient$i")
             }
 

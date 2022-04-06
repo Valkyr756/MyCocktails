@@ -1,5 +1,7 @@
 package uji.al385773.mycocktails.Model.Database
 
+import android.os.Parcel
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -21,4 +23,37 @@ data class Cocktail(
 
     @PrimaryKey
     val id: Int
-)//Implement Parcelable
+): Parcelable {
+    constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readString()!!,
+        parcel.readInt()
+    ) {
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(name)
+        parcel.writeString(isAlcoholic)
+        parcel.writeString(glass)
+        parcel.writeString(instructions)
+        parcel.writeString(category)
+        parcel.writeInt(id)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Cocktail> {
+        override fun createFromParcel(parcel: Parcel): Cocktail {
+            return Cocktail(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Cocktail?> {
+            return arrayOfNulls(size)
+        }
+    }
+}

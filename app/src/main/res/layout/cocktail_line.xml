@@ -121,7 +121,6 @@
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="TextView"
                     android:textColor="#8C1818"
                     android:textSize="12sp"
                     android:textStyle="bold"
