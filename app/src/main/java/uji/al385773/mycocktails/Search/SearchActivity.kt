@@ -30,6 +30,7 @@ class SearchActivity : AppCompatActivity(), ISearchView, RadioGroup.OnCheckedCha
         spinner = findViewById(R.id.spinner)
         autoCompleteIngredient = findViewById(R.id.autoCompleteTextIngredient)
         radioGroup = findViewById(R.id.radioGroup)
+        radioGroup.setOnCheckedChangeListener(this)
         radioButtonInet = findViewById(R.id.radioButtonInet)
         radioButtonLocal = findViewById(R.id.radioButtonLocal)
         spinnerButton = findViewById(R.id.searchSpinner)

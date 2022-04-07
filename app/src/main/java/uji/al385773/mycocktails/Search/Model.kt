@@ -57,7 +57,7 @@ class Model(context:Context) {
             listener.onResponse(ingredients)
     }
 
-    fun getCocktails(
+    fun getCocktailsFromInet(
         listener: Response.Listener<List<CocktailBundle>>,
         errorListener: Response.ErrorListener,
         gameInfo: ResultsInfo
@@ -66,6 +66,13 @@ class Model(context:Context) {
             network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.category)
         else
             network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.ingredient)
+    }
+
+    fun getCocktailsFromLocal(
+        listener: Response.Listener<List<CocktailBundle>>,
+        gameInfo: ResultsInfo
+    ) {
+
     }
 
     private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<CocktailBundle>>, errorListener: Response.ErrorListener) {
