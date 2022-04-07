@@ -24,8 +24,6 @@ class ResultsActivity : AppCompatActivity(), IResultsView {
         const val RESULTS_INFO = "ResultsInfo"
         lateinit var retrievedInfo: ResultsInfo
     }
-//Guardar lo de local/inet del radiogroup igual que se haría con los ingredientes cuando los eliges, en una variable. Esa variable
-    //la pasas al parcleable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

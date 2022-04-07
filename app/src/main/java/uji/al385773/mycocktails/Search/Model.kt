@@ -14,6 +14,7 @@ class Model(context:Context) {
     var possibleIngredient: String = ""
     var possibleCategory: String = ""
     var isCategory: Boolean = true
+    var isInetSearch: Boolean = true
 
     private val network = Network.getInstance(context)
     private val database = Database.getInstance(context)
@@ -91,5 +92,9 @@ class Model(context:Context) {
         isCategory = true
     }
 
-    val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory)
+    fun setTypeOfSearch(isInet: Boolean) {
+        isInetSearch = isInet
+    }
+
+    val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory, isInetSearch)
 }

@@ -11,6 +11,7 @@ class ResultsPresenter(val view: IResultsView, val model: Model) {
     }
 
     init {
+
         model.getCocktails({
             view.showCocktails(it)
         },

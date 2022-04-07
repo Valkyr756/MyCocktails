@@ -13,7 +13,7 @@ import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Results.ResultsActivity
 import uji.al385773.mycocktails.ResultsInfo
 
-class SearchActivity : AppCompatActivity(), ISearchView {
+class SearchActivity : AppCompatActivity(), ISearchView, RadioGroup.OnCheckedChangeListener {
 
     lateinit var spinner: Spinner
     lateinit var autoCompleteIngredient: AutoCompleteTextView
@@ -70,6 +70,13 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         })
     }
 
+    override fun onCheckedChanged(p0: RadioGroup?, idRadio: Int) {
+        when (idRadio){
+            radioButtonInet.id -> presenter.setTypeOfSearch(true)
+            radioButtonLocal.id-> presenter.setTypeOfSearch(false)
+        }
+    }
+
     override fun errorMessage(message: String) {
         Toast.makeText(this,message,Toast.LENGTH_LONG).show()
     }
@@ -86,6 +93,5 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         val intent = Intent(this, ResultsActivity::class.java).apply {
             putExtra(ResultsActivity.RESULTS_INFO, resultsInfo) }
         startActivity(intent)
-        //radioGroup.checkedRadioButtonId == radioButtonInet.id
     }
 }

@@ -3,10 +3,11 @@ package uji.al385773.mycocktails
 import android.os.Parcel
 import android.os.Parcelable
 
-data class ResultsInfo(val category: String, val ingredient: String, val isCategory: Boolean) : Parcelable {
+data class ResultsInfo(val category: String, val ingredient: String, val isCategory: Boolean, val isInetSearch: Boolean) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readByte() != 0.toByte(),
         parcel.readByte() != 0.toByte()
     ) {
     }
@@ -15,6 +16,7 @@ data class ResultsInfo(val category: String, val ingredient: String, val isCateg
         parcel.writeString(category)
         parcel.writeString(ingredient)
         parcel.writeByte(if (isCategory) 1 else 0)
+        parcel.writeByte(if (isInetSearch) 1 else 0)
     }
 
     override fun describeContents(): Int {
@@ -30,5 +32,4 @@ data class ResultsInfo(val category: String, val ingredient: String, val isCateg
             return arrayOfNulls(size)
         }
     }
-
 }

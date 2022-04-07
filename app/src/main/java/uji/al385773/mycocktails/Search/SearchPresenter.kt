@@ -39,4 +39,8 @@ class SearchPresenter(val view: ISearchView, val model: Model) {
     fun doSearch() {
         view.startResultsActivity(model.resultsInfo)
     }
+
+    fun setTypeOfSearch(isInet: Boolean) {
+        model.setTypeOfSearch(isInet)
+    }
 }
