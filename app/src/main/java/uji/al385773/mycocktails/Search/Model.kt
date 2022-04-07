@@ -2,6 +2,10 @@ package uji.al385773.mycocktails.Search
 
 import android.content.Context
 import com.android.volley.Response
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Model.Database.*
 import uji.al385773.mycocktails.ResultsInfo
@@ -11,27 +15,45 @@ class Model(context:Context) {
     var possibleCategory: String = ""
     var isCategory: Boolean = true
 
-    /*var detailsName: String = ""
-    var detailsalcoholic: String = ""
-    var detailsGlass: String = ""
-    var detailsCategory: String = ""
-    var detailsInstructions: String = ""
-    var detailsIngredients: String = ""*/
-
     private val network = Network.getInstance(context)
+    private val database = Database.getInstance(context)
 
-    fun getCategories(
-        listener: Response.Listener<List<Category>>,
-        errorListener: Response.ErrorListener
-    ) {
-        network.getCategories(listener, errorListener)
+    fun getCategories(listener: Response.Listener<List<Category>>,
+                      errorListener: Response.ErrorListener) = GlobalScope.launch(Dispatchers.Main) {
+            val categories = withContext(Dispatchers.IO) {
+                database.dao.getCategories()
+            }
+            if (categories.isEmpty()) {
+                network.getCategories(Response.Listener {
+                    GlobalScope.launch {
+                        database.dao.insertCategories(it)
+                    }
+                    listener.onResponse(it)
+                }, Response.ErrorListener {
+                    errorListener.onErrorResponse(it)
+                })
+            }
+            else
+                listener.onResponse(categories)
     }
 
-    fun getIngredients(
-        listener: Response.Listener<List<Ingredient>>,
-        errorListener: Response.ErrorListener
-    ) {
-        network.getIngredients(listener, errorListener)
+    fun getIngredients(listener: Response.Listener<List<Ingredient>>,
+                      errorListener: Response.ErrorListener) = GlobalScope.launch(Dispatchers.Main) {
+        val ingredients = withContext(Dispatchers.IO) {
+            database.dao.getIngredients()
+        }
+        if (ingredients.isEmpty()) {
+            network.getIngredients(Response.Listener {
+                GlobalScope.launch {
+                    database.dao.insertIngredients(it)
+                }
+                listener.onResponse(it)
+            }, Response.ErrorListener {
+                errorListener.onErrorResponse(it)
+            })
+        }
+        else
+            listener.onResponse(ingredients)
     }
 
     fun getCocktails(
@@ -69,15 +91,5 @@ class Model(context:Context) {
         isCategory = true
     }
 
-    /*fun getDetails(cocktailBundle: CocktailBundle) {
-        detailsName = cocktailBundle.cocktail.name
-        detailsalcoholic = cocktailBundle.cocktail.isAlcoholic
-        detailsGlass = cocktailBundle.cocktail.glass
-        detailsCategory = cocktailBundle.cocktail.category
-        detailsInstructions = cocktailBundle.cocktail.instructions
-        detailsIngredients = cocktailBundle.cocktailIngredients.
-    }*/
-
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory)
-    //val detailsInfo get() = DetailsInfo(detailsName, detailsalcoholic, detailsGlass, detailsCategory, detailsInstructions, detailsIngredients)
 }

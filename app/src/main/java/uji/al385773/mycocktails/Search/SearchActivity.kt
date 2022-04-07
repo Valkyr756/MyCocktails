@@ -19,6 +19,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
     lateinit var autoCompleteIngredient: AutoCompleteTextView
     lateinit var spinnerButton: Button
     lateinit var autoCompleteButton: Button
+    lateinit var radioGroup: RadioGroup
+    lateinit var radioButtonInet: RadioButton
+    lateinit var radioButtonLocal: RadioButton
     lateinit var presenter:SearchPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +29,9 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         setContentView(R.layout.activity_search)
         spinner = findViewById(R.id.spinner)
         autoCompleteIngredient = findViewById(R.id.autoCompleteTextIngredient)
+        radioGroup = findViewById(R.id.radioGroup)
+        radioButtonInet = findViewById(R.id.radioButtonInet)
+        radioButtonLocal = findViewById(R.id.radioButtonLocal)
         spinnerButton = findViewById(R.id.searchSpinner)
         spinnerButton.setOnClickListener { presenter.doSearch() }
         autoCompleteButton = findViewById(R.id.searchAutoComplete)
@@ -80,5 +86,6 @@ class SearchActivity : AppCompatActivity(), ISearchView {
         val intent = Intent(this, ResultsActivity::class.java).apply {
             putExtra(ResultsActivity.RESULTS_INFO, resultsInfo) }
         startActivity(intent)
+        //radioGroup.checkedRadioButtonId == radioButtonInet.id
     }
 }

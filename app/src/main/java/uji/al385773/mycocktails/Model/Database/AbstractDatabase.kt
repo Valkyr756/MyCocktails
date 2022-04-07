@@ -6,7 +6,9 @@ import androidx.room.Database
 @Database(
     entities = [
         Category::class,
-        Ingredient::class
+        Ingredient::class,
+        Cocktail::class,
+        CocktailIngredient::class
     ],
     version = 1
 )

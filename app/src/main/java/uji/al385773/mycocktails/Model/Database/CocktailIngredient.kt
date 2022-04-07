@@ -19,7 +19,7 @@ import androidx.room.PrimaryKey
         parentColumns = ["name"],
         childColumns = ["ingredientName"]
     )],
-    indices = [Index(value = ["id"], unique = true), Index(value = ["name"], unique = true)],
+    indices = [Index(value = ["cocktailID"], unique = true), Index(value = ["ingredientName"], unique = true)],
 )
 
 data class CocktailIngredient(
