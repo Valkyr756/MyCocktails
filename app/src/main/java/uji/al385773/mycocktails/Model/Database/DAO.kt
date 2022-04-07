@@ -22,10 +22,11 @@ interface DAO {
     @Query("SELECT * FROM cocktail WHERE category == :cat ORDER BY name")
         fun getCocktailsByCategory(cat: String): List<Cocktail>
 //primero no hace falta lef join porque tienes el id de cocktails, luego sí se hace cuando coges los ingredientes del cocktail
-    @Query("SELECT cocktail.name, cocktail.isAlcoholic, cocktail.glass, cocktail.instructions, cocktail.category, cocktail.id " +
-            "FROM cocktail LEFT JOIN cocktailIngredient ON cocktail.id = cocktailIngredient.cocktailID " +
-            "WHERE cocktailIngredient.ingredientName == :ingred ORDER BY cocktail.name")
-        fun getCocktailsByIngredient(ingred: String): List<Cocktail>
+//cocktail.id
+    @Query("SELECT cocktailID " +
+            "FROM cocktailIngredient " +
+            "WHERE ingredientName == :ingred")
+        fun getCocktailsByIngredient(ingred: String): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCocktailIngredients(cocktailIngredients: List<CocktailIngredient>)
