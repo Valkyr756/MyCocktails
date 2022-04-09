@@ -1,12 +1,12 @@
 package uji.al385773.mycocktails.Search
 
 import android.content.Context
+import android.graphics.Bitmap
 import com.android.volley.Response
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import uji.al385773.mycocktails.DetailsInfo
 import uji.al385773.mycocktails.Model.Database.*
 import uji.al385773.mycocktails.ResultsInfo
 
@@ -57,25 +57,52 @@ class Model(context:Context) {
             listener.onResponse(ingredients)
     }
 
+    fun getCocktailsFromLocal(
+        listener: Response.Listener<List<CocktailBundle>>,
+        gameInfo: ResultsInfo
+    ) = GlobalScope.launch(Dispatchers.Main) {
+            val cocktailsID = withContext(Dispatchers.IO) {
+                if (gameInfo.isCategory)
+                    database.dao.getCocktailsIDByCategory(gameInfo.category)
+                else
+                    database.dao.getCocktailsIDByIngredient(gameInfo.ingredient)
+            }
+            val bundle = mutableListOf<CocktailBundle>()
+            for (id in cocktailsID){
+                GlobalScope.launch {
+                    val cocktail = withContext(Dispatchers.IO) {
+                        database.dao.getCocktailByID(id)
+                    }
+                    val cocktailIngredients = withContext(Dispatchers.IO) {
+                        database.dao.getCocktailIngredientsByID(id)
+                    }
+                    bundle.add(CocktailBundle(cocktail, cocktailIngredients))
+                }
+            }
+            listener.onResponse(bundle)
+        }
+
+    /*private fun getCocktailFromIDLocal(id: Int, listener: Response.Listener<Cocktail>) {
+        GlobalScope.launch {
+            val cocktail = withContext(Dispatchers.IO) {
+                database.dao.getCocktailByID(id)
+            }
+            listener.onResponse(cocktail)
+        }
+    }*/
+
     fun getCocktailsFromInet(
         listener: Response.Listener<List<CocktailBundle>>,
         errorListener: Response.ErrorListener,
         gameInfo: ResultsInfo
     ) {
         if (gameInfo.isCategory)
-            network.getCocktailsByCategory({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.category)
+            network.getCocktailsByCategory({ getCocktailsFromIDInet(it, listener, errorListener) }, errorListener, gameInfo.category)
         else
-            network.getCocktailsByIngredient({ getCocktailsFromID(it, listener, errorListener) }, errorListener, gameInfo.ingredient)
+            network.getCocktailsByIngredient({ getCocktailsFromIDInet(it, listener, errorListener) }, errorListener, gameInfo.ingredient)
     }
 
-    fun getCocktailsFromLocal(
-        listener: Response.Listener<List<CocktailBundle>>,
-        gameInfo: ResultsInfo
-    ) {
-
-    }
-
-    private fun getCocktailsFromID(cocktailsID: List<String>, listener: Response.Listener<List<CocktailBundle>>, errorListener: Response.ErrorListener) {
+    private fun getCocktailsFromIDInet(cocktailsID: List<String>, listener: Response.Listener<List<CocktailBundle>>, errorListener: Response.ErrorListener) {
         val cocktailBundle = ArrayList<CocktailBundle>()
 
         for (id in cocktailsID) {
@@ -85,9 +112,15 @@ class Model(context:Context) {
                                       }
                                     }, errorListener, id)
         }
-
-
     }
+
+    /*fun getImageBitmap(listener: Response.Listener<Bitmap>, imageUrl: String) {
+        var bitmap: Bitmap
+        network.getBitmapFromUrl({bitmap = it
+                                  listener.onResponse(bitmap)
+                                 },
+                                 imageUrl)
+    }*/
 
     fun setIngredient(ingredient: String) {
         possibleIngredient = ingredient
@@ -101,6 +134,14 @@ class Model(context:Context) {
 
     fun setTypeOfSearch(isInet: Boolean) {
         isInetSearch = isInet
+    }
+
+    fun addCocktailToDatabase(cocktailInfo: CocktailBundle) {
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                database.dao.insertCocktail(cocktailInfo.cocktail)
+            }
+        }
     }
 
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory, isInetSearch)

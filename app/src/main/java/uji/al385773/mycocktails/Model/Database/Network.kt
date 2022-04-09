@@ -1,9 +1,12 @@
 package uji.al385773.mycocktails.Model.Database
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.widget.ImageView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
+import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONException
@@ -24,6 +27,7 @@ class Network private constructor(context: Context) {
     private val COCKTAIL_IS_ALCOHOLIC_LABEL = "strAlcoholic"
     private val COCKTAIL_INSTRUCTIONS_LABEL = "strInstructions"
     private val COCKTAIL_GLASS_LABEL = "strGlass"
+    private val COCKTAIL_PHOTO_LABEL = "strDrinkThumb"
 
     fun getCategories(listener: Response.Listener<List<Category>>, errorListener: Response.ErrorListener) {
         val url = "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list"
@@ -151,6 +155,7 @@ class Network private constructor(context: Context) {
             val glass = cocktailObject.getString(COCKTAIL_GLASS_LABEL)
             val category = cocktailObject.getString(CATEGORY_NAME_LABEL)
             val id = cocktailObject.getString(COCKTAIL_ID_LABEL)
+            val imageUrl = cocktailObject.getString(COCKTAIL_PHOTO_LABEL)
             val ingredientList = mutableListOf<CocktailIngredient>()
 
             var strIngredient: String = cocktailObject.getString(INGREDIENT_NAME_LABEL)    //strIngredient1
@@ -164,9 +169,25 @@ class Network private constructor(context: Context) {
                 strIngredient = cocktailObject.getString("strIngredient$i")
             }
 
-            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, id.toInt()), ingredientList))
+            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, /*imageUrl,*/ id.toInt()), ingredientList))
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
         }
     }
+
+    /*fun getBitmapFromUrl(listener: Response.Listener<Bitmap>, imageUrl: String) {
+        val imageRequest = ImageRequest(
+            imageUrl,
+            {bitmap ->
+                listener.onResponse(bitmap)
+            },
+            0, // max width
+            0, // max height
+            ImageView.ScaleType.CENTER_CROP, // image scale type
+            Bitmap.Config.ARGB_8888, // decode config
+            {
+            }
+        )
+        queue.add(imageRequest)
+    }*/
 }

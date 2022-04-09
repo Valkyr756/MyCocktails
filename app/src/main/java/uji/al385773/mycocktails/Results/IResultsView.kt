@@ -1,7 +1,5 @@
 package uji.al385773.mycocktails.Results
 
-import uji.al385773.mycocktails.DetailsInfo
-import uji.al385773.mycocktails.Model.Database.Cocktail
 import uji.al385773.mycocktails.Model.Database.CocktailBundle
 
 interface IResultsView {

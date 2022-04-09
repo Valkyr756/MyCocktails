@@ -13,13 +13,13 @@ import androidx.room.PrimaryKey
     )],
     indices = [Index(value = ["name"], unique = true)],
 )
-
 data class Cocktail(
     val name: String,
     val isAlcoholic: String,
     val glass: String,
     val instructions: String,
     val category: String,
+    //val imageUrl: String,
 
     @PrimaryKey
     val id: Int
@@ -30,9 +30,9 @@ data class Cocktail(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        //parcel.readString()!!,
         parcel.readInt()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
@@ -40,6 +40,7 @@ data class Cocktail(
         parcel.writeString(glass)
         parcel.writeString(instructions)
         parcel.writeString(category)
+        //parcel.writeString(imageUrl)
         parcel.writeInt(id)
     }
 

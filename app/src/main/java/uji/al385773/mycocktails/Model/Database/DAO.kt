@@ -16,23 +16,21 @@ interface DAO {
     @Query("SELECT * FROM ingredient ORDER BY name")
         fun getIngredients(): List<Ingredient>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCocktail(cocktail: Cocktail)
 
-    @Query("SELECT * FROM cocktail WHERE category == :cat ORDER BY name")
-        fun getCocktailsByCategory(cat: String): List<Cocktail>
-//primero no hace falta lef join porque tienes el id de cocktails, luego sí se hace cuando coges los ingredientes del cocktail
-//cocktail.id
-    @Query("SELECT cocktailID " +
-            "FROM cocktailIngredient " +
-            "WHERE ingredientName == :ingred")
-        fun getCocktailsByIngredient(ingred: String): Int
+    @Query("SELECT id FROM cocktail WHERE category == :cat")
+        fun getCocktailsIDByCategory(cat: String): List<Int>
+
+    @Query("SELECT cocktailID FROM cocktailIngredient WHERE ingredientName == :ingred")
+        fun getCocktailsIDByIngredient(ingred: String): List<Int>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCocktailIngredients(cocktailIngredients: List<CocktailIngredient>)
 
-    @Query("SELECT cocktailIngredient.cocktailID, cocktailIngredient.measures, cocktailIngredient.ingredientName " +
-            "FROM cocktailIngredient LEFT JOIN cocktail ON cocktailIngredient.cocktailID = cocktail.id " +
-            "WHERE cocktail.id == :searchID")
-        fun getCocktailIngredients(searchID: Int): List<CocktailIngredient>
+    @Query("SELECT * FROM cocktail WHERE id == :searchID ORDER BY cocktail.name")
+        fun getCocktailByID(searchID: Int): Cocktail
+
+    @Query("SELECT * FROM cocktailIngredient WHERE cocktailID == :searchID")
+        fun getCocktailIngredientsByID(searchID: Int): List<CocktailIngredient>
 }
