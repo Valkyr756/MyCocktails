@@ -1,18 +1,17 @@
 package uji.al385773.mycocktails.Detail
 
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import uji.al385773.mycocktails.Dialogs.AddDialog
+import androidx.appcompat.app.AlertDialog
 import uji.al385773.mycocktails.Dialogs.ScoreDialog
 import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Search.Model
 
-class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener, AddDialog.AddListener {
+class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener {
 
     lateinit var nameCocktail: TextView
     lateinit var alcoholicCocktail: TextView
@@ -63,8 +62,17 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
 
     override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")
 
-    override fun askForAdd() = AddDialog().show(supportFragmentManager, "Add")
+    override fun askForAdd() {
+        AlertDialog.Builder(this).apply {
+            setTitle("Database")
+            setMessage("Cocktail and ingredients inserted into local database")
+            setPositiveButton("OK") { _, _ ->
+                finish()
+            }
+            show()
+        }
 
+    }
     /*override fun saveBitmapFromImage(imageBitmap: Bitmap) {
         imageBit = imageBitmap
     }*/
@@ -94,9 +102,5 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
         scoreCocktail.text = "$score out of 10"
         presenter.onScoreChanged(score)
         addButton.isEnabled = true
-    }
-
-    override fun onOkAddClicked() {
-        finish()
     }
 }

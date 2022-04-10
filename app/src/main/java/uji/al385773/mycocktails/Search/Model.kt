@@ -73,14 +73,18 @@ class Model(context:Context) {
                     val cocktail = withContext(Dispatchers.IO) {
                         database.dao.getCocktailByID(id)
                     }
-                    val cocktailIngredients = withContext(Dispatchers.IO) {
-                        database.dao.getCocktailIngredientsByID(id)
+                    GlobalScope.launch {
+                        withContext(Dispatchers.IO) {
+                            val cocktailIngredients = withContext(Dispatchers.IO) {
+                                database.dao.getCocktailIngredientsByID(id)
+                            }
+                            bundle.add(CocktailBundle(cocktail, cocktailIngredients))
+                        }
                     }
-                    bundle.add(CocktailBundle(cocktail, cocktailIngredients))
                 }
             }
             listener.onResponse(bundle)
-        }
+    }
 
     /*private fun getCocktailFromIDLocal(id: Int, listener: Response.Listener<Cocktail>) {
         GlobalScope.launch {
@@ -137,11 +141,16 @@ class Model(context:Context) {
     }
 
     fun addCocktailToDatabase(cocktailInfo: CocktailBundle) {
-        GlobalScope.launch {
-            withContext(Dispatchers.IO) {
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
                 database.dao.insertCocktail(cocktailInfo.cocktail)
             }
         }
+        /*GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                database.dao.insertCocktailIngredients(cocktailInfo.cocktailIngredients)
+            }
+        }*/
     }
 
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory, isInetSearch)
