@@ -114,13 +114,13 @@ class Model(context:Context) {
         }
     }
 
-    /*fun getImageBitmap(listener: Response.Listener<Bitmap>, imageUrl: String) {
+    fun getImageBitmap(listener: Response.Listener<Bitmap>, imageUrl: String) {
         var bitmap: Bitmap
         network.getBitmapFromUrl({bitmap = it
                                   listener.onResponse(bitmap)
                                  },
                                  imageUrl)
-    }*/
+    }
 
     fun setIngredient(ingredient: String) {
         possibleIngredient = ingredient

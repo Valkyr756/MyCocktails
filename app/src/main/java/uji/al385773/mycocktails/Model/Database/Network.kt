@@ -169,13 +169,13 @@ class Network private constructor(context: Context) {
                 strIngredient = cocktailObject.getString("strIngredient$i")
             }
 
-            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, /*imageUrl,*/ id.toInt()), ingredientList))
+            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, imageUrl, id.toInt()), ingredientList))
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
         }
     }
 
-    /*fun getBitmapFromUrl(listener: Response.Listener<Bitmap>, imageUrl: String) {
+    fun getBitmapFromUrl(listener: Response.Listener<Bitmap>, imageUrl: String) {
         val imageRequest = ImageRequest(
             imageUrl,
             {bitmap ->
@@ -189,5 +189,5 @@ class Network private constructor(context: Context) {
             }
         )
         queue.add(imageRequest)
-    }*/
+    }
 }

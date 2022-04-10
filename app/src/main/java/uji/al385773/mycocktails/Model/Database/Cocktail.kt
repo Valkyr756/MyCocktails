@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
 @Entity(foreignKeys = [ForeignKey(
         entity = Category::class,
         parentColumns = ["name"],
-        childColumns = ["id"]
+        childColumns = ["category"]
     )],
     indices = [Index(value = ["name"], unique = true)],
 )
@@ -19,7 +19,7 @@ data class Cocktail(
     val glass: String,
     val instructions: String,
     val category: String,
-    //val imageUrl: String,
+    val imageUrl: String,
 
     @PrimaryKey
     val id: Int
@@ -30,7 +30,7 @@ data class Cocktail(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        //parcel.readString()!!,
+        parcel.readString()!!,
         parcel.readInt()
     )
 
@@ -40,7 +40,7 @@ data class Cocktail(
         parcel.writeString(glass)
         parcel.writeString(instructions)
         parcel.writeString(category)
-        //parcel.writeString(imageUrl)
+        parcel.writeString(imageUrl)
         parcel.writeInt(id)
     }
 

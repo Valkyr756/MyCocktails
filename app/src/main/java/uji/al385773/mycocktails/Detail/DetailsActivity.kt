@@ -25,7 +25,7 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
     lateinit var cocktailPhoto: ImageView
     lateinit var presenter: DetailsPresenter
 
-    lateinit var imageBit: Bitmap
+    //lateinit var imageBit: Bitmap
 
     companion object {
         const val DETAILS_INFO = "DetailsInfo"
