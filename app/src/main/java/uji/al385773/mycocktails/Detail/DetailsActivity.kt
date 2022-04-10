@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import uji.al385773.mycocktails.Dialogs.AddDialog
 import uji.al385773.mycocktails.Dialogs.ScoreDialog
 import uji.al385773.mycocktails.Model.Database.CocktailBundle
 import uji.al385773.mycocktails.R
 import uji.al385773.mycocktails.Search.Model
 
-class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener {
+class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreListener, AddDialog.AddListener {
 
     lateinit var nameCocktail: TextView
     lateinit var alcoholicCocktail: TextView
@@ -62,6 +63,8 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
 
     override fun askForScore() = ScoreDialog().show(supportFragmentManager, "Score")
 
+    override fun askForAdd() = AddDialog().show(supportFragmentManager, "Add")
+
     /*override fun saveBitmapFromImage(imageBitmap: Bitmap) {
         imageBit = imageBitmap
     }*/
@@ -89,5 +92,11 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
 
     override fun onScoreAvailable(score: Int) {
         scoreCocktail.text = "$score out of 10"
+        presenter.onScoreChanged(score)
+        addButton.isEnabled = true
+    }
+
+    override fun onOkAddClicked() {
+        finish()
     }
 }

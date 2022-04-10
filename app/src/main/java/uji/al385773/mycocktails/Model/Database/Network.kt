@@ -169,7 +169,8 @@ class Network private constructor(context: Context) {
                 strIngredient = cocktailObject.getString("strIngredient$i")
             }
 
-            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, imageUrl, id.toInt()), ingredientList))
+            listener.onResponse(CocktailBundle(Cocktail(name, isAlcoholic, glass, instructions, category, imageUrl,0,  id.toInt()), ingredientList))
+
         } catch (e: JSONException) {
             errorListener.onErrorResponse(VolleyError("BAD JSON FORMAT"))
         }

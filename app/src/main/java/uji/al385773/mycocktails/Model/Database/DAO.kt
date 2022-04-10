@@ -16,7 +16,7 @@ interface DAO {
     @Query("SELECT * FROM ingredient ORDER BY name")
         fun getIngredients(): List<Ingredient>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertCocktail(cocktail: Cocktail)
 
     @Query("SELECT id FROM cocktail WHERE category == :cat")

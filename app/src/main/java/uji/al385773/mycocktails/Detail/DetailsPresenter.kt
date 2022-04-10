@@ -18,5 +18,10 @@ class DetailsPresenter(val view: IDetailsView, val model: Model) {
 
     fun onAddClicked() {
         model.addCocktailToDatabase(DetailsActivity.cocktailInfo)
+        view.askForAdd()
+    }
+
+    fun onScoreChanged(score: Int) {
+        DetailsActivity.cocktailInfo.cocktail.score = score
     }
 }

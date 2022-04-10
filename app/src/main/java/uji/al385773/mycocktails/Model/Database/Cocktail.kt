@@ -20,6 +20,7 @@ data class Cocktail(
     val instructions: String,
     val category: String,
     val imageUrl: String,
+    var score: Int,
 
     @PrimaryKey
     val id: Int
@@ -31,8 +32,10 @@ data class Cocktail(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
+        parcel.readInt(),
         parcel.readInt()
-    )
+    ) {
+    }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
@@ -41,6 +44,7 @@ data class Cocktail(
         parcel.writeString(instructions)
         parcel.writeString(category)
         parcel.writeString(imageUrl)
+        parcel.writeInt(score)
         parcel.writeInt(id)
     }
 
