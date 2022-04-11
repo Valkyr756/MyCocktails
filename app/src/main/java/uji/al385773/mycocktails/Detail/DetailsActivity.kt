@@ -83,6 +83,7 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
         typeOfGlassCocktail.text = cocktailBundle.cocktail.glass
         categoryCocktail.text = cocktailBundle.cocktail.category
         instructionsCocktail.text = cocktailBundle.cocktail.instructions
+        scoreCocktail.text = "${cocktailBundle.cocktail.score} out of 10"
         //cocktailPhoto.setImageBitmap(imageBit)
 
         var i = 0

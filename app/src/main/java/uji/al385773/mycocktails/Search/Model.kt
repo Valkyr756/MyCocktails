@@ -60,7 +60,36 @@ class Model(context:Context) {
     fun getCocktailsFromLocal(
         listener: Response.Listener<List<CocktailBundle>>,
         gameInfo: ResultsInfo
-    ) = GlobalScope.launch(Dispatchers.Main) {
+    ) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val bundle = mutableListOf<CocktailBundle>()
+            withContext(Dispatchers.IO) {
+
+                val cocktailsID: List<Int>
+                if (gameInfo.isCategory) {
+                    cocktailsID = database.dao.getCocktailsIDByCategory(gameInfo.category)
+                }
+                else
+                    cocktailsID = database.dao.getCocktailsIDByIngredient(gameInfo.ingredient)
+
+
+                var cocktail: Cocktail
+                var cocktailIngredients: List<CocktailIngredient>
+                for (id in cocktailsID){
+                    cocktail = database.dao.getCocktailByID(id)
+                    cocktailIngredients = database.dao.getCocktailIngredientsByID(id)
+                    bundle.add(CocktailBundle(cocktail, cocktailIngredients))
+                }
+            }
+            listener.onResponse(bundle)
+        }
+    }
+
+    /*fun getCocktailsFromLocal(
+        listener: Response.Listener<List<CocktailBundle>>,
+        gameInfo: ResultsInfo
+    ) {
+        GlobalScope.launch(Dispatchers.Main) {
             val cocktailsID = withContext(Dispatchers.IO) {
                 if (gameInfo.isCategory)
                     database.dao.getCocktailsIDByCategory(gameInfo.category)
@@ -68,7 +97,7 @@ class Model(context:Context) {
                     database.dao.getCocktailsIDByIngredient(gameInfo.ingredient)
             }
             val bundle = mutableListOf<CocktailBundle>()
-            for (id in cocktailsID){
+            for (id in cocktailsID) {
                 GlobalScope.launch {
                     val cocktail = withContext(Dispatchers.IO) {
                         database.dao.getCocktailByID(id)
@@ -84,7 +113,8 @@ class Model(context:Context) {
                 }
             }
             listener.onResponse(bundle)
-    }
+        }
+    }*/
 
     /*private fun getCocktailFromIDLocal(id: Int, listener: Response.Listener<Cocktail>) {
         GlobalScope.launch {
