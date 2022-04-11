@@ -72,7 +72,6 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
             }
             show()
         }
-
     }
     /*override fun saveBitmapFromImage(imageBitmap: Bitmap) {
         imageBit = imageBitmap
