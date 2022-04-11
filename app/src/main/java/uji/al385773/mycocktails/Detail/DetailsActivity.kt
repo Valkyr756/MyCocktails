@@ -91,7 +91,7 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
             if (cocktailBundle.cocktailIngredients[i].measures == "null")
                 ingredientsCocktail.text = "${ingredientsCocktail.text}${cocktailBundle.cocktailIngredients[i].ingredientName}"
             else
-                ingredientsCocktail.text = "${ingredientsCocktail.text}${cocktailBundle.cocktailIngredients[i].measures}${cocktailBundle.cocktailIngredients[i].ingredientName}"
+                ingredientsCocktail.text = "${ingredientsCocktail.text}${cocktailBundle.cocktailIngredients[i].measures} ${cocktailBundle.cocktailIngredients[i].ingredientName}"
 
             if (i != cocktailBundle.cocktailIngredients.size - 1)
                 ingredientsCocktail.text = ingredientsCocktail.text.toString().plus(", ")

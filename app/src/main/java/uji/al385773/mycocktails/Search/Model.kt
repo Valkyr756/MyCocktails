@@ -116,15 +116,6 @@ class Model(context:Context) {
         }
     }*/
 
-    /*private fun getCocktailFromIDLocal(id: Int, listener: Response.Listener<Cocktail>) {
-        GlobalScope.launch {
-            val cocktail = withContext(Dispatchers.IO) {
-                database.dao.getCocktailByID(id)
-            }
-            listener.onResponse(cocktail)
-        }
-    }*/
-
     fun getCocktailsFromInet(
         listener: Response.Listener<List<CocktailBundle>>,
         errorListener: Response.ErrorListener,
@@ -174,6 +165,10 @@ class Model(context:Context) {
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 database.dao.insertCocktail(cocktailInfo.cocktail)
+
+                for (i in 0 until cocktailInfo.cocktailIngredients.size){
+                    database.dao.insertCocktailIngredients(cocktailInfo.cocktailIngredients[i])
+                }
             }
         }
         /*GlobalScope.launch(Dispatchers.Main) {

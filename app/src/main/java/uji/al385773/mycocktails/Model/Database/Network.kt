@@ -162,7 +162,7 @@ class Network private constructor(context: Context) {
             var strMeasure: String = cocktailObject.getString(MEASURE_NAME_LABEL)  //strMeasure1
             var i = 1   //index for moving through the ingredients in the JSON
 
-            while (strIngredient != "null") {   //Sirve tanto strIngredient como strMeasure
+            while (strIngredient != "null" && strIngredient != "") {   //Sirve tanto strIngredient como strMeasure
                 ingredientList.add(CocktailIngredient(id.toInt(), strMeasure, strIngredient))
                 i++
                 strMeasure = cocktailObject.getString("strMeasure$i")

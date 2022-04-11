@@ -43,7 +43,7 @@ class ResultsAdapter(private val results: List<CocktailBundle>,
                 if (result.cocktailIngredients[i].measures == "null")   //Algunos ingredientes no tienen mediciones (null)
                     ingredientsText.text = "${ingredientsText.text}${result.cocktailIngredients[i].ingredientName}"
                 else
-                    ingredientsText.text = "${ingredientsText.text}${result.cocktailIngredients[i].measures}${result.cocktailIngredients[i].ingredientName}"
+                    ingredientsText.text = "${ingredientsText.text}${result.cocktailIngredients[i].measures} ${result.cocktailIngredients[i].ingredientName}"
 
                 if (i != result.cocktailIngredients.size - 1)
                     ingredientsText.text = ingredientsText.text.toString().plus(", ")

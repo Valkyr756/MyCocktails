@@ -25,8 +25,8 @@ interface DAO {
     @Query("SELECT cocktailID FROM cocktailIngredient WHERE ingredientName == :ingred")
         fun getCocktailsIDByIngredient(ingred: String): List<Int>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCocktailIngredients(cocktailIngredients: List<CocktailIngredient>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertCocktailIngredients(cocktailIngredients: CocktailIngredient)
 
     @Query("SELECT * FROM cocktail WHERE id == :searchID ORDER BY cocktail.name")
         fun getCocktailByID(searchID: Int): Cocktail
