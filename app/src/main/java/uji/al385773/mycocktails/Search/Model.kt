@@ -165,17 +165,9 @@ class Model(context:Context) {
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 database.dao.insertCocktail(cocktailInfo.cocktail)
-
-                for (i in 0 until cocktailInfo.cocktailIngredients.size){
-                    database.dao.insertCocktailIngredients(cocktailInfo.cocktailIngredients[i])
-                }
+                //database.dao.insertCocktailIngredients(cocktailInfo.cocktailIngredients)
             }
         }
-        /*GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO) {
-                database.dao.insertCocktailIngredients(cocktailInfo.cocktailIngredients)
-            }
-        }*/
     }
 
     val resultsInfo get() = ResultsInfo(possibleCategory,possibleIngredient, isCategory, isInetSearch)

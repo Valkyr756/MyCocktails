@@ -5,13 +5,13 @@ import uji.al385773.mycocktails.Search.Model
 class DetailsPresenter(val view: IDetailsView, val model: Model) {
 
     init {
-        /*model.getImageBitmap(
+        model.getImageBitmap(
             {
-                view.saveBitmapFromImage(it)
+                view.fillCocktailInfo(DetailsActivity.cocktailInfo, it)
             },
             DetailsActivity.cocktailInfo.cocktail.imageUrl
-        )*/
-        view.fillCocktailInfo(DetailsActivity.cocktailInfo)
+        )
+
     }
 
     fun onRequestScore() = view.askForScore()

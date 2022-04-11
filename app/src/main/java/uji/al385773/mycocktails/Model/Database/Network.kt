@@ -182,8 +182,8 @@ class Network private constructor(context: Context) {
             {bitmap ->
                 listener.onResponse(bitmap)
             },
-            0, // max width
-            0, // max height
+            200, // max width
+            250, // max height
             ImageView.ScaleType.CENTER_CROP, // image scale type
             Bitmap.Config.ARGB_8888, // decode config
             {

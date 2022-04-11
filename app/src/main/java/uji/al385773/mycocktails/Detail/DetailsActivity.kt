@@ -1,5 +1,6 @@
 package uji.al385773.mycocktails.Detail
 
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -77,14 +78,14 @@ class DetailsActivity : AppCompatActivity(), IDetailsView, ScoreDialog.ScoreList
         imageBit = imageBitmap
     }*/
 
-    override fun fillCocktailInfo(cocktailBundle: CocktailBundle) {
+    override fun fillCocktailInfo(cocktailBundle: CocktailBundle, bitmap: Bitmap) {
         nameCocktail.text = cocktailBundle.cocktail.name
         alcoholicCocktail.text = cocktailBundle.cocktail.isAlcoholic
         typeOfGlassCocktail.text = cocktailBundle.cocktail.glass
         categoryCocktail.text = cocktailBundle.cocktail.category
         instructionsCocktail.text = cocktailBundle.cocktail.instructions
         scoreCocktail.text = "${cocktailBundle.cocktail.score} out of 10"
-        //cocktailPhoto.setImageBitmap(imageBit)
+        cocktailPhoto.setImageBitmap(bitmap)
 
         var i = 0
         while (i < cocktailBundle.cocktailIngredients.size){
